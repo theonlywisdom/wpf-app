@@ -51,13 +51,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FriendOrganizerDbContext.cs" />
-    <Compile Include="Migrations\202106071314000_InitialDatabase.cs" />
-    <Compile Include="Migrations\202106071314000_InitialDatabase.designer.cs">
-      <DependentUpon>202106071314000_InitialDatabase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202106071455083_remote connection test.cs" />
-    <Compile Include="Migrations\202106071455083_remote connection test.designer.cs">
-      <DependentUpon>202106071455083_remote connection test.cs</DependentUpon>
+    <Compile Include="Migrations\202106071536078_InitialDatabase.cs" />
+    <Compile Include="Migrations\202106071536078_InitialDatabase.designer.cs">
+      <DependentUpon>202106071536078_InitialDatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -73,11 +69,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202106071314000_InitialDatabase.resx">
-      <DependentUpon>202106071314000_InitialDatabase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202106071455083_remote connection test.resx">
-      <DependentUpon>202106071455083_remote connection test.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202106071536078_InitialDatabase.resx">
+      <DependentUpon>202106071536078_InitialDatabase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

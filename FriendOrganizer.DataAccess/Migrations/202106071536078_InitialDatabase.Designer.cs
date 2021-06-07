@@ -13,7 +13,7 @@ namespace FriendOrganizer.DataAccess.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202106071314000_InitialDatabase"; }
+            get { return "202106071536078_InitialDatabase"; }
         }
         
         string IMigrationMetadata.Source
