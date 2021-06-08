@@ -27,9 +27,9 @@ namespace FriendOrganizer.UI.ViewModel
             SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
         }
 
-        private void OnSaveExecute()
+        private async void OnSaveExecute()
         {
-            throw new NotImplementedException();
+            await _dataService.SaveAsync(Friend);
         }
 
         private bool OnSaveCanExecute()
