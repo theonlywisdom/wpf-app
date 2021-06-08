@@ -7,9 +7,10 @@ namespace FriendOrganizer.UI.ViewModel
 {
   public class MainViewModel : ViewModelBase
   {
-    public MainViewModel(INavigationViewModel navigationViewModel)
+    public MainViewModel(INavigationViewModel navigationViewModel, IFriendDetailViewModel friendDetailViewModel)
     {
             NavigationViewModel = navigationViewModel;
+            FriendDetailViewModel = friendDetailViewModel;
     }
 
 
@@ -19,6 +20,6 @@ namespace FriendOrganizer.UI.ViewModel
     }
 
         public INavigationViewModel NavigationViewModel { get; }
-
+        public IFriendDetailViewModel FriendDetailViewModel { get; set; }
     }
 }
