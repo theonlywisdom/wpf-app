@@ -20,6 +20,6 @@ namespace FriendOrganizer.UI.ViewModel
     }
 
         public INavigationViewModel NavigationViewModel { get; }
-        public IFriendDetailViewModel FriendDetailViewModel { get; set; }
+        public IFriendDetailViewModel FriendDetailViewModel { get; }
     }
 }
