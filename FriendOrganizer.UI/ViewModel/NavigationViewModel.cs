@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FriendOrganizer.UI.ViewModel
 {
-    public class NavigationViewModel
+    public class NavigationViewModel : INavigationViewModel
     {
         private IFriendLookupDataService _friendLookupDataService;
 
