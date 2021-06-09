@@ -6,13 +6,13 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FriendOrganizer.UI.Data
+namespace FriendOrganizer.UI.Data.Repositories
 {
-  public class FriendDataService : IFriendDataService
+  public class FriendRepository : IFriendRepository
   {
         private Func<FriendOrganizerDbContext> _contextCreator;
 
-        public FriendDataService(Func<FriendOrganizerDbContext> contextCreator)
+        public FriendRepository(Func<FriendOrganizerDbContext> contextCreator)
         {
             _contextCreator = contextCreator;
 
