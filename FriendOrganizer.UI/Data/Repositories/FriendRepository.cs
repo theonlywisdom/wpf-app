@@ -1,14 +1,12 @@
 ﻿using FriendOrganizer.DataAccess;
 using FriendOrganizer.Model;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FriendOrganizer.UI.Data.Repositories
 {
-  public class FriendRepository : IFriendRepository
+    public class FriendRepository : IFriendRepository
   {
         private Func<FriendOrganizerDbContext> _contextCreator;
 

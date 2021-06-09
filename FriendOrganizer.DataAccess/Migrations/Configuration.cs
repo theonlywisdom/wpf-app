@@ -1,12 +1,9 @@
+using FriendOrganizer.Model;
+using System.Data.Entity.Migrations;
+
 namespace FriendOrganizer.DataAccess.Migrations
 {
-  using FriendOrganizer.Model;
-  using System;
-  using System.Data.Entity;
-  using System.Data.Entity.Migrations;
-  using System.Linq;
-
-  internal sealed class Configuration : DbMigrationsConfiguration<FriendOrganizer.DataAccess.FriendOrganizerDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<FriendOrganizer.DataAccess.FriendOrganizerDbContext>
   {
     public Configuration()
     {
