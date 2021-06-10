@@ -1,4 +1,5 @@
 ﻿using FriendOrganizer.Model;
+using System;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
@@ -18,5 +19,10 @@ namespace FriendOrganizer.DataAccess
       base.OnModelCreating(modelBuilder);
       modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
     }
-  }
+
+        public static implicit operator Func<object>(FriendOrganizerDbContext v)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
