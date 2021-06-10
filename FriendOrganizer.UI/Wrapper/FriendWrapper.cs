@@ -7,24 +7,18 @@ namespace FriendOrganizer.UI.Wrapper
 
     public class FriendWrapper : ModelWrapper<Friend>
     {
-        public int Id 
-        { 
-            get { return Model.Id; } 
-        }
-
-        public string FirstName 
+        public string Email
         {
             get { return GetValue<string>(); }
             set { SetValue(value); }
         }
-
-        public string LastName 
+         
+        public int Id
         {
-            get { return GetValue<string>(); }
-            set { SetValue(value); }
+            get { return Model.Id; }
         }
 
-        public string Email 
+        public string FirstName
         {
             get { return GetValue<string>(); }
             set { SetValue(value); }
@@ -33,6 +27,11 @@ namespace FriendOrganizer.UI.Wrapper
         public FriendWrapper(Friend model) : base(model)
         {
 
+        }
+        public string LastName
+        {
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
         }
 
         protected override IEnumerable<string> ValidateProperty(string propertyName)

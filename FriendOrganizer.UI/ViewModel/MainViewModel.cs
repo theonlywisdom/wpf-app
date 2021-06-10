@@ -10,9 +10,9 @@ namespace FriendOrganizer.UI.ViewModel
     {
         private IEventAggregator _eventAggregator;
         private IFriendDetailViewModel _friendDetailViewModel;
+        private Func<IFriendDetailViewModel> _friendDetailViewModelCreator;
         private IMessageDialogService _messageDialogService;
 
-        private Func<IFriendDetailViewModel> _friendDetailViewModelCreator;
 
         public IFriendDetailViewModel FriendDetailViewModel
         {
@@ -24,7 +24,10 @@ namespace FriendOrganizer.UI.ViewModel
             }
         }
 
-        public INavigationViewModel NavigationViewModel { get; }
+        public async Task LoadAsync()
+        {
+            await NavigationViewModel.LoadAsync();
+        }
 
         public MainViewModel(INavigationViewModel navigationViewModel, Func<IFriendDetailViewModel> friendDetailViewModelCreator, IEventAggregator eventAggregator, IMessageDialogService messageDialogService)
         {
@@ -38,10 +41,7 @@ namespace FriendOrganizer.UI.ViewModel
             NavigationViewModel = navigationViewModel;
         }
 
-        public async Task LoadAsync()
-        {
-            await NavigationViewModel.LoadAsync();
-        }
+        public INavigationViewModel NavigationViewModel { get; }
 
         private async void OnOpenFriendDetailView(int friendId)
         {

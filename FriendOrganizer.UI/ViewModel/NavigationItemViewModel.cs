@@ -4,8 +4,6 @@
     {
         private string _displayMember;
 
-        public int Id { get; }
-
         public string DisplayMember
         {
             get { return _displayMember; }
@@ -15,6 +13,8 @@
                 OnPropertyChanged();
             }
         }
+
+        public int Id { get; }
 
         public NavigationItemViewModel(int id, string displayMember)
         {

@@ -12,11 +12,6 @@ namespace FriendOrganizer.UI.Data.Lookups
     {
         private Func<FriendOrganizerDbContext> _contextCreator;
 
-        public LookupDataService(Func<FriendOrganizerDbContext> contextCreator)
-        {
-            _contextCreator = contextCreator;
-        }
-
         public async Task<IEnumerable<LookupItem>> GetFriendLookupAsync()
         {
             using (var ctx = _contextCreator())
@@ -30,6 +25,11 @@ namespace FriendOrganizer.UI.Data.Lookups
                     })
                     .ToListAsync();
             }
+        }
+
+        public LookupDataService(Func<FriendOrganizerDbContext> contextCreator)
+        {
+            _contextCreator = contextCreator;
         }
     }
 }

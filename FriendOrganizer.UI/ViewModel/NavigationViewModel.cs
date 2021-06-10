@@ -9,11 +9,35 @@ namespace FriendOrganizer.UI.ViewModel
 {
     public class NavigationViewModel : ViewModelBase, INavigationViewModel
     {
-        private IFriendLookupDataService _friendLookupDataService;
         private IEventAggregator _eventAggregator;
+        private IFriendLookupDataService _friendLookupDataService;
         private NavigationItemViewModel _selectedFriend;
 
+        private void AfterFriendSaved(AfterFriendSavedEventArgs obj)
+        {
+            var lookupItem = Friends.Single(l => l.Id == obj.Id);
+            lookupItem.DisplayMember = obj.DisplayMember;
+        }
+
         public ObservableCollection<NavigationItemViewModel> Friends { get; }
+
+        public async Task LoadAsync()
+        {
+            var lookup = await _friendLookupDataService.GetFriendLookupAsync();
+            Friends.Clear();
+            foreach (var item in lookup)
+            {
+                Friends.Add(new NavigationItemViewModel(item.Id, item.DisplayMember));
+            }
+        }
+
+        public NavigationViewModel(IFriendLookupDataService friendLookupDataService, IEventAggregator eventAggregator)
+        {
+            _friendLookupDataService = friendLookupDataService;
+            _eventAggregator = eventAggregator;
+            Friends = new ObservableCollection<NavigationItemViewModel>();
+            _eventAggregator.GetEvent<AfterFriendSavedEvent>().Subscribe(AfterFriendSaved);
+        }
 
         public NavigationItemViewModel SelectedFriend
         {
@@ -27,30 +51,6 @@ namespace FriendOrganizer.UI.ViewModel
                     _eventAggregator.GetEvent<OpenFriendDetailViewEvent>()
                         .Publish(_selectedFriend.Id);
                 }
-            }
-        }
-
-        public NavigationViewModel(IFriendLookupDataService friendLookupDataService, IEventAggregator eventAggregator)
-        {
-            _friendLookupDataService = friendLookupDataService;
-            _eventAggregator = eventAggregator;
-            Friends = new ObservableCollection<NavigationItemViewModel>();
-            _eventAggregator.GetEvent<AfterFriendSavedEvent>().Subscribe(AfterFriendSaved);
-        }
-
-        private void AfterFriendSaved(AfterFriendSavedEventArgs obj)
-        {
-            var lookupItem = Friends.Single(l => l.Id == obj.Id);
-            lookupItem.DisplayMember = obj.DisplayMember;
-        }
-
-        public async Task LoadAsync()
-        {
-            var lookup = await _friendLookupDataService.GetFriendLookupAsync();
-            Friends.Clear();
-            foreach (var item in lookup)
-            {
-                Friends.Add(new NavigationItemViewModel(item.Id, item.DisplayMember));
             }
         }
     }

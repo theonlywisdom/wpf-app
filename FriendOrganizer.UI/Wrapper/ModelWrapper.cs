@@ -6,6 +6,11 @@ namespace FriendOrganizer.UI.Wrapper
 {
     public class ModelWrapper<T> : NotifyErrorInfoBase
     {
+        protected virtual TValue GetValue<TValue>([CallerMemberName] string propertyName = null)
+        {
+            return (TValue)typeof(T).GetProperty(propertyName).GetValue(Model);
+        }
+
         public T Model { get; }
 
         public ModelWrapper(T model)
@@ -13,27 +18,11 @@ namespace FriendOrganizer.UI.Wrapper
             Model = model;
         }
 
-        protected virtual TValue GetValue<TValue>([CallerMemberName] string propertyName = null)
-        {
-            return (TValue)typeof(T).GetProperty(propertyName).GetValue(Model);
-        }
-
         protected virtual void SetValue<TValue>(TValue value, [CallerMemberName] string propertyName = null)
         {
             typeof(T).GetProperty(propertyName).SetValue(Model, value);
             OnPropertyChanged(propertyName);
             ValidatePropertyInternal(propertyName, value);
-        }
-
-        private void ValidateDataAnnotations(string propertyName, object currentValue)
-        {
-            var results = new List<ValidationResult>();
-            var context = new ValidationContext(Model) { MemberName = propertyName };
-            Validator.TryValidateProperty(currentValue, context, results);
-            foreach (var result in results)
-            {
-                AddError(propertyName, result.ErrorMessage);
-            }
         }
 
         private void ValidateCustomErrors(string propertyName)
@@ -45,6 +34,17 @@ namespace FriendOrganizer.UI.Wrapper
                 {
                     AddError(propertyName, error);
                 }
+            }
+        }
+         
+        private void ValidateDataAnnotations(string propertyName, object currentValue)
+        {
+            var results = new List<ValidationResult>();
+            var context = new ValidationContext(Model) { MemberName = propertyName };
+            Validator.TryValidateProperty(currentValue, context, results);
+            foreach (var result in results)
+            {
+                AddError(propertyName, result.ErrorMessage);
             }
         }
 

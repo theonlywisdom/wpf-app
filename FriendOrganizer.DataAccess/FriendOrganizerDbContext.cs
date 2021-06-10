@@ -5,14 +5,14 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace FriendOrganizer.DataAccess
 {
-    public class FriendOrganizerDbContext:DbContext
+    public class FriendOrganizerDbContext : DbContext
     {
-        public DbSet<Friend> Friends { get; set; }
-
         public FriendOrganizerDbContext():base("FriendOrganizerDb")
         {
 
         }
+
+        public DbSet<Friend> Friends { get; set; }
 
         public static implicit operator Func<object>(FriendOrganizerDbContext v)
         {
