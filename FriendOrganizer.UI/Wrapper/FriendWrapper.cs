@@ -9,46 +9,25 @@ namespace FriendOrganizer.UI.Wrapper
     {
         public int Id 
         { 
-            get 
-            { 
-                return Model.Id; 
-            } 
+            get { return Model.Id; } 
         }
 
         public string FirstName 
         {
-            get 
-            {
-                return GetValue<string>();
-            }
-            set
-            {
-                SetValue(value);
-            }
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
         }
 
         public string LastName 
         {
-            get 
-            {
-                return GetValue<string>();
-            }
-            set
-            {
-                SetValue(value);
-            }
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
         }
 
         public string Email 
         {
-            get 
-            {
-                return GetValue<string>();
-            }
-            set
-            {
-                SetValue(value);
-            }
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
         }
 
         public FriendWrapper(Friend model) : base(model)

@@ -10,9 +10,7 @@ namespace FriendOrganizer.UI.ViewModel
     public class NavigationViewModel : ViewModelBase, INavigationViewModel
     {
         private IFriendLookupDataService _friendLookupDataService;
-
         private IEventAggregator _eventAggregator;
-
         private NavigationItemViewModel _selectedFriend;
 
         public ObservableCollection<NavigationItemViewModel> Friends { get; }

@@ -8,17 +8,13 @@ namespace FriendOrganizer.UI.ViewModel
     public class MainViewModel : ViewModelBase
     {
         private IEventAggregator _eventAggregator;
-
         private IFriendDetailViewModel _friendDetailViewModel;
 
         private Func<IFriendDetailViewModel> _friendDetailViewModelCreator;
 
         public IFriendDetailViewModel FriendDetailViewModel
         {
-            get
-            {
-                return _friendDetailViewModel;
-            }
+            get { return _friendDetailViewModel;}
             private set
             {
                 _friendDetailViewModel = value;
