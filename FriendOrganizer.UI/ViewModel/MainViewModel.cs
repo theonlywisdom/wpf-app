@@ -9,9 +9,24 @@ namespace FriendOrganizer.UI.ViewModel
     {
         private IEventAggregator _eventAggregator;
 
+        private IFriendDetailViewModel _friendDetailViewModel;
+
         private Func<IFriendDetailViewModel> _friendDetailViewModelCreator;
 
-        private IFriendDetailViewModel _friendDetailViewModel;
+        public IFriendDetailViewModel FriendDetailViewModel
+        {
+            get
+            {
+                return _friendDetailViewModel;
+            }
+            private set
+            {
+                _friendDetailViewModel = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public INavigationViewModel NavigationViewModel { get; }
 
         public MainViewModel(INavigationViewModel navigationViewModel, Func<IFriendDetailViewModel> friendDetailViewModelCreator, IEventAggregator eventAggregator)
         {
@@ -27,21 +42,6 @@ namespace FriendOrganizer.UI.ViewModel
         public async Task LoadAsync()
         {
             await NavigationViewModel.LoadAsync();
-        }
-
-        public INavigationViewModel NavigationViewModel { get; }
-
-        public IFriendDetailViewModel FriendDetailViewModel
-        {
-            get 
-            { 
-                return _friendDetailViewModel; 
-            }
-            private set 
-            { 
-                _friendDetailViewModel = value;
-                OnPropertyChanged();
-            }
         }
 
         private async void OnOpenFriendDetailView(int friendId)

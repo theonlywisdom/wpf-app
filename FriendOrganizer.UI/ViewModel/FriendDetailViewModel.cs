@@ -10,24 +10,9 @@ namespace FriendOrganizer.UI.ViewModel
 {
     public class FriendDetailViewModel : ViewModelBase, IFriendDetailViewModel
     {
-        private IFriendRepository _friendRepository;
         private IEventAggregator _eventAggregator;
         private FriendWrapper _friend;
-
-        public async Task LoadAsync(int friendId)
-        {
-            var friend = await _friendRepository.GetByIdAsync(friendId);
-
-            Friend = new FriendWrapper(friend);
-            Friend.PropertyChanged += (s, e) =>
-            {
-                if (e.PropertyName == nameof(Friend.HasErrors))
-                {
-                    ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
-                }
-            };
-            ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
-        }
+        private IFriendRepository _friendRepository;
 
         public FriendWrapper Friend
         {
@@ -46,8 +31,28 @@ namespace FriendOrganizer.UI.ViewModel
             _friendRepository = friendRepository;
             _eventAggregator = eventAggregator;
 
-
             SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
+        }
+
+        public async Task LoadAsync(int friendId)
+        {
+            var friend = await _friendRepository.GetByIdAsync(friendId);
+
+            Friend = new FriendWrapper(friend);
+            Friend.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(Friend.HasErrors))
+                {
+                    ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+                }
+            };
+            ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+        }
+
+        private bool OnSaveCanExecute()
+        {
+            // TODo: Check in addition if friend has changes
+            return Friend != null && !Friend.HasErrors;
         }
 
         private async void OnSaveExecute()
@@ -60,13 +65,5 @@ namespace FriendOrganizer.UI.ViewModel
                     DisplayMember = $"{Friend.FirstName} {Friend.LastName}"
                 });
         }
-
-        private bool OnSaveCanExecute()
-        {
-            // TODo: Check in addition if friend has changes
-            return Friend != null && !Friend.HasErrors;
-        }
-
-
     }
 }

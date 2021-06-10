@@ -16,19 +16,6 @@ namespace FriendOrganizer.UI.Wrapper
 
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
-        public IEnumerable GetErrors(string propertyName)
-        {
-            return _errorsByPropertyName.ContainsKey(propertyName)
-                ? _errorsByPropertyName[propertyName]
-                : null;
-        }
-
-        protected virtual void OnErrorsChanged(string propertyName)
-        {
-            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
-            base.OnPropertyChanged(nameof(HasErrors));
-        }
-
         protected void AddError(string propertyName, string error)
         {
             if (!_errorsByPropertyName.ContainsKey(propertyName))
@@ -49,6 +36,19 @@ namespace FriendOrganizer.UI.Wrapper
                 _errorsByPropertyName.Remove(propertyName);
                 OnErrorsChanged(propertyName);
             }
+        }
+
+        public IEnumerable GetErrors(string propertyName)
+        {
+            return _errorsByPropertyName.ContainsKey(propertyName)
+                ? _errorsByPropertyName[propertyName]
+                : null;
+        }
+
+        protected virtual void OnErrorsChanged(string propertyName)
+        {
+            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+            base.OnPropertyChanged(nameof(HasErrors));
         }
     }
 }

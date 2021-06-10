@@ -15,6 +15,7 @@ namespace FriendOrganizer.UI.Data.Repositories
             _context = context;
 
         }
+
         public async Task<Friend> GetByIdAsync(int friendId)
         {
             return await _context.Friends.SingleAsync(f => f.Id == friendId);
