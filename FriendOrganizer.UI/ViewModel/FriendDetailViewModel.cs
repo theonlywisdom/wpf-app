@@ -17,6 +17,15 @@ namespace FriendOrganizer.UI.ViewModel
         private IFriendRepository _friendRepository;
         private bool _hasChanges;
 
+        private Friend CreateNewFriend()
+        {
+            var friend = new Friend();
+            _friendRepository.Add(friend);
+            return friend;
+        }
+
+        public ICommand DeleteCommand { get; }
+
         public FriendWrapper Friend
         {
             get { return _friend; }
@@ -25,6 +34,21 @@ namespace FriendOrganizer.UI.ViewModel
                 _friend = value;
                 OnPropertyChanged();
             }
+        }
+
+        public FriendDetailViewModel(IFriendRepository friendRepository, IEventAggregator eventAggregator)
+        {
+            _friendRepository = friendRepository;
+            _eventAggregator = eventAggregator;
+
+            SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
+            DeleteCommand = new DelegateCommand(OnDeleteExecute);
+        }
+
+        private async void OnDeleteExecute()
+        {
+            _friendRepository.Remove(Friend.Model);
+            await _friendRepository.SaveAsync();
         }
 
         public bool HasChanges
@@ -38,16 +62,6 @@ namespace FriendOrganizer.UI.ViewModel
                     ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
                 }
             }
-        }
-
-        public ICommand SaveCommand { get; }
-
-        public FriendDetailViewModel(IFriendRepository friendRepository, IEventAggregator eventAggregator)
-        {
-            _friendRepository = friendRepository;
-            _eventAggregator = eventAggregator;
-
-            SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
         }
 
         public async Task LoadAsync(int? friendId)
@@ -76,13 +90,6 @@ namespace FriendOrganizer.UI.ViewModel
             }
         }
 
-        private Friend CreateNewFriend()
-        {
-            var friend = new Friend();
-            _friendRepository.Add(friend);
-            return friend;
-        }
-
         private bool OnSaveCanExecute()
         {
             return Friend != null && !Friend.HasErrors && HasChanges;
@@ -99,5 +106,8 @@ namespace FriendOrganizer.UI.ViewModel
                     DisplayMember = $"{Friend.FirstName} {Friend.LastName}"
                 });
         }
+
+        public ICommand SaveCommand { get; }
+
     }
 }
