@@ -53,7 +53,7 @@ namespace FriendOrganizer.UI.ViewModel
         public async Task LoadAsync(int? friendId)
         {   
             var friend = friendId.HasValue
-                ? await _friendRepository.GetByIdAsync(friendId.Value) 
+                ? await _friendRepository.GetByIdAsync(friendId.Value)
                 : CreateNewFriend();
 
             Friend = new FriendWrapper(friend);
@@ -69,6 +69,11 @@ namespace FriendOrganizer.UI.ViewModel
                 }
             };
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+            if (Friend.Id == 0)
+            {
+                // A little trick to trigger the validation.
+                Friend.FirstName = "";
+            }
         }
 
         private Friend CreateNewFriend()
