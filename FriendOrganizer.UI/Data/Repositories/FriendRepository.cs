@@ -10,6 +10,11 @@ namespace FriendOrganizer.UI.Data.Repositories
     {
         private FriendOrganizerDbContext _context;
 
+        public void Add(Friend friend)
+        {
+            _context.Friends.Add(friend);
+        }
+
         public FriendRepository(FriendOrganizerDbContext context)
         {
             _context = context;
