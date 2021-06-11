@@ -49,6 +49,7 @@ namespace FriendOrganizer.UI.ViewModel
         {
             _friendRepository.Remove(Friend.Model);
             await _friendRepository.SaveAsync();
+            _eventAggregator.GetEvent<AfterFriendDeletedEvent>().Publish(Friend.Id);
         }
 
         public bool HasChanges
