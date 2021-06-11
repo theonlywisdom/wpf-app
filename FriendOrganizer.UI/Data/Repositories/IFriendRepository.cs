@@ -10,5 +10,6 @@ namespace FriendOrganizer.UI.Data.Repositories
         bool HasChanges();
         Task SaveAsync();
         void Remove(Friend model);
+        void RemovePhoneNumber(FriendPhoneNumber model);
     }
 }

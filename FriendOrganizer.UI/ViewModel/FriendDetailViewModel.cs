@@ -57,7 +57,7 @@ namespace FriendOrganizer.UI.ViewModel
             SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
             DeleteCommand = new DelegateCommand(OnDeleteExecute);
             AddPhoneNumberCommand = new DelegateCommand(OnAddPhoneNumberExecute);
-            RemovePhoneNumberCommand = new DelegateCommand(RemovePhoneNumberExecute, OnRemovePhoneNumberCanExecute);
+            RemovePhoneNumberCommand = new DelegateCommand(OnRemovePhoneNumberExecute, OnRemovePhoneNumberCanExecute);
 
             ProgrammingLanguages = new ObservableCollection<LookupItem>();
             PhoneNumbers = new ObservableCollection<FriendPhoneNumberWrapper>();
@@ -68,10 +68,14 @@ namespace FriendOrganizer.UI.ViewModel
             return SelectedPhoneNumber != null;
         }
 
-        private void RemovePhoneNumberExecute()
+        private void OnRemovePhoneNumberExecute()
         {
-            // TODO: implement this
-
+            SelectedPhoneNumber.PropertyChanged -= FriendPhoneNumberWrapper_PropertyChanged;
+            _friendRepository.RemovePhoneNumber(SelectedPhoneNumber.Model);
+            PhoneNumbers.Remove(SelectedPhoneNumber);
+            SelectedPhoneNumber = null;
+            HasChanges = _friendRepository.HasChanges();
+            ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
         }
 
         private void OnAddPhoneNumberExecute()
