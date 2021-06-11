@@ -12,6 +12,8 @@ namespace FriendOrganizer.DataAccess
 
         }
 
+        public DbSet<FriendPhoneNumber> FriendPhoneNumbers { get; set; }
+
         public DbSet<Friend> Friends { get; set; }
 
         public static implicit operator Func<object>(FriendOrganizerDbContext v)
