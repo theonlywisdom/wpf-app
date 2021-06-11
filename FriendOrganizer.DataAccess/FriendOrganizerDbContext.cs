@@ -24,5 +24,7 @@ namespace FriendOrganizer.DataAccess
           base.OnModelCreating(modelBuilder);
           modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
+
+        public DbSet<ProgrammingLanguage> ProgrammingLanguages { get; set; }
     }
 }

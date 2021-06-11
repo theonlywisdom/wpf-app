@@ -8,7 +8,9 @@ namespace FriendOrganizer.Model
     [StringLength(50)]
     public string Email { get; set; }
 
-    [Required]
+    public int? FavoriteLanguageId { get; set; }
+
+        [Required]
     [StringLength(50)]
     public string FirstName { get; set; }
 
@@ -17,5 +19,7 @@ namespace FriendOrganizer.Model
 
     [StringLength(50)]
     public string LastName { get; set; }
-  }
+
+    public ProgrammingLanguage FavoriteLanguage { get; set; }
+    }
 }
