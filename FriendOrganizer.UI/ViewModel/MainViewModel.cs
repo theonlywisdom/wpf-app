@@ -15,6 +15,11 @@ namespace FriendOrganizer.UI.ViewModel
         private Func<IFriendDetailViewModel> _friendDetailViewModelCreator;
         private IMessageDialogService _messageDialogService;
 
+        private void AfterFriendDeleted(int friendId)
+        {
+            FriendDetailViewModel = null;
+        }
+
         public ICommand CreateNewFriendCommand { get; }
 
         public IFriendDetailViewModel FriendDetailViewModel
@@ -40,11 +45,15 @@ namespace FriendOrganizer.UI.ViewModel
 
             _eventAggregator.GetEvent<OpenFriendDetailViewEvent>()
                 .Subscribe(OnOpenFriendDetailView);
+            _eventAggregator.GetEvent<AfterFriendDeletedEvent>()
+                .Subscribe(AfterFriendDeleted);
 
             CreateNewFriendCommand = new DelegateCommand(OnCreateNewFriendExecute);
 
             NavigationViewModel = navigationViewModel;
         }
+
+        
 
         private void OnCreateNewFriendExecute()
         {
