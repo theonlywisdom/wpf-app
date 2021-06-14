@@ -20,11 +20,11 @@ namespace FriendOrganizer.UI.ViewModel
             DetailViewModel = null;
         }
 
-        public ICommand CreateNewFriendCommand { get; }
+        public ICommand CreateNewDetailCommand { get; }
 
         public IDetailViewModel DetailViewModel
         {
-            get { return _detailViewModel;}
+            get { return _detailViewModel; }
             private set
             {
                 _detailViewModel = value;
@@ -48,14 +48,15 @@ namespace FriendOrganizer.UI.ViewModel
             _eventAggregator.GetEvent<AfterDetailDeletedEvent>()
                 .Subscribe(AfterDetailDeleted);
 
-            CreateNewFriendCommand = new DelegateCommand(OnCreateNewFriendExecute);
+            CreateNewDetailCommand = new DelegateCommand<Type>(OnCreateNewDetailExecute);
 
             NavigationViewModel = navigationViewModel;
         }
 
-        private void OnCreateNewFriendExecute()
+        private void OnCreateNewDetailExecute(Type viewModelType)
         {
-            OnOpenDetailView(null);
+            OnOpenDetailView(
+                new OpenDetailViewEventArgs { ViewModelName = viewModelType.Name });
         }
 
         public INavigationViewModel NavigationViewModel { get; }
@@ -77,6 +78,8 @@ namespace FriendOrganizer.UI.ViewModel
                     DetailViewModel = _friendDetailViewModelCreator();
                     break;
             }
+
+
 
             await DetailViewModel.LoadAsync(args.Id);
         }
