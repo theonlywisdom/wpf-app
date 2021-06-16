@@ -16,10 +16,7 @@ namespace FriendOrganizer.DataAccess
 
         public DbSet<Friend> Friends { get; set; }
 
-        public static implicit operator Func<object>(FriendOrganizerDbContext v)
-        {
-            throw new NotImplementedException();
-        }
+        public DbSet<Meeting> Meetings { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

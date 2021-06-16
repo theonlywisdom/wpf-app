@@ -10,6 +10,8 @@ namespace FriendOrganizer.Model
         [StringLength(50)]
         public string Email { get; set; }
 
+        public ProgrammingLanguage FavoriteLanguage { get; set; }
+
         public int? FavoriteLanguageId { get; set; }
 
         [Required]
@@ -19,6 +21,7 @@ namespace FriendOrganizer.Model
         public Friend()
         {
             PhoneNumbers = new Collection<FriendPhoneNumber>();
+            Meetings = new Collection<Meeting>();
         }
 
         [Required]
@@ -27,7 +30,7 @@ namespace FriendOrganizer.Model
         [StringLength(50)]
         public string LastName { get; set; }
 
-        public ProgrammingLanguage FavoriteLanguage { get; set; }
+        public ICollection<Meeting> Meetings { get; set; }
 
         public ICollection<FriendPhoneNumber> PhoneNumbers { get; set; }
     }
