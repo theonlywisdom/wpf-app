@@ -78,9 +78,6 @@ namespace FriendOrganizer.UI.ViewModel
                     DetailViewModel = _friendDetailViewModelCreator();
                     break;
             }
-
-
-
             await DetailViewModel.LoadAsync(args.Id);
         }
     }

@@ -21,7 +21,6 @@ namespace FriendOrganizer.UI.ViewModel
                 case nameof(FriendDetailViewModel):
                     AfterDetailDeleted(Friends, args);
                     break;
-
                 case nameof(MeetingDetailViewModel):
                     AfterDetailDeleted(Meetings, args);
                     break;
