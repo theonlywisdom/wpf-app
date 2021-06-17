@@ -13,8 +13,16 @@ namespace FriendOrganizer.UI.ViewModel
     public abstract class DetailViewModelBase : ViewModelBase, IDetailViewModel
     {
         private bool _hasChanges;
+        protected readonly IEventAggregator EventAggregator;
+        private int _id;
 
         public ICommand DeleteCommand { get; private set; }
+
+        public int Id
+        {
+            get { return _id; }
+            protected set { _id = value; }
+        }
 
         public DetailViewModelBase(IEventAggregator eventAggregator)
         {
@@ -23,7 +31,6 @@ namespace FriendOrganizer.UI.ViewModel
             DeleteCommand = new DelegateCommand(OnDeleteExecute);
         }
 
-        protected readonly IEventAggregator EventAggregator;
 
         public bool HasChanges
         {
