@@ -83,13 +83,12 @@ namespace FriendOrganizer.UI.ViewModel
 
             InitializeMeeting(meeting);
 
-            // TODO: Load friends for the picklist
             _allFriends = await _meetingRepository.GetAllFriendsAsync();
 
-            SetUpPickList();
+            SetupPickList();
         }
 
-        private void SetUpPickList()
+        private void SetupPickList()
         {
             var meetingFriendIds = Meeting.Model.Friends
                 .Select(f => f.Id).ToList();
@@ -172,7 +171,13 @@ namespace FriendOrganizer.UI.ViewModel
 
         private void OnRemoveFriendExecute()
         {
-            // TODO: implement remove logic
+            var friendToRemove = SelectedAddedFriend;
+
+            Meeting.Model.Friends.Remove(friendToRemove);
+            AddedFriends.Remove(friendToRemove);
+            AvailableFriends.Add(friendToRemove);
+            HasChanges = _meetingRepository.HasChanges();
+            ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
         }
 
         private bool OnRemoveFriendCanExecute()
@@ -182,12 +187,18 @@ namespace FriendOrganizer.UI.ViewModel
 
         private bool OnAddFriendCanExecute()
         {
-            return SelectedAddedFriend != null;
+            return SelectedAvailableFriend != null;
         }
 
         private void OnAddFriendExecute()
         {
-            // TODO: implement add logic
+            var friendToAdd = SelectedAvailableFriend;
+
+            Meeting.Model.Friends.Add(friendToAdd);
+            AddedFriends.Add(friendToAdd);
+            AvailableFriends.Remove(friendToAdd);
+            HasChanges = _meetingRepository.HasChanges();
+            ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
         }
     }
 }
