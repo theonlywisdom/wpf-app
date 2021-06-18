@@ -18,36 +18,6 @@ namespace FriendOrganizer.UI.ViewModel
         private IDetailViewModel _selectedDetailViewModel;
         private IMessageDialogService _messageDialogService;
 
-        private void AfterDetailDeleted(AfterDetailDeletedEventArgs args)
-        {
-            var detailViewModel = DetailViewModels
-                .SingleOrDefault(vm => vm.Id == args.Id
-                && vm.GetType().Name == args.ViewModelName);
-            if (detailViewModel != null)
-            {
-                DetailViewModels.Remove(detailViewModel);
-            }
-        }
-
-        public ICommand CreateNewDetailCommand { get; }
-
-        public ObservableCollection<IDetailViewModel> DetailViewModels { get; }
-
-        public IDetailViewModel SelectedDetailViewModel
-        {
-            get { return _selectedDetailViewModel; }
-            set
-            {
-                _selectedDetailViewModel = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public async Task LoadAsync()
-        {
-            await NavigationViewModel.LoadAsync();
-        }
-
         public MainViewModel(INavigationViewModel navigationViewModel,
             IIndex<string, IDetailViewModel> detailViewModelCreator,
             IEventAggregator eventAggregator,
@@ -63,10 +33,33 @@ namespace FriendOrganizer.UI.ViewModel
                 .Subscribe(OnOpenDetailView);
             _eventAggregator.GetEvent<AfterDetailDeletedEvent>()
                 .Subscribe(AfterDetailDeleted);
+            _eventAggregator.GetEvent<AfterDetailClosedEvent>()
+                .Subscribe(AfterDetailClosed);
 
             CreateNewDetailCommand = new DelegateCommand<Type>(OnCreateNewDetailExecute);
 
             NavigationViewModel = navigationViewModel;
+        }
+
+        public ICommand CreateNewDetailCommand { get; }
+
+        public INavigationViewModel NavigationViewModel { get; }
+
+        public IDetailViewModel SelectedDetailViewModel
+        {
+            get { return _selectedDetailViewModel; }
+            set
+            {
+                _selectedDetailViewModel = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<IDetailViewModel> DetailViewModels { get; }
+
+        public async Task LoadAsync()
+        {
+            await NavigationViewModel.LoadAsync();
         }
 
         private void OnCreateNewDetailExecute(Type viewModelType)
@@ -74,8 +67,6 @@ namespace FriendOrganizer.UI.ViewModel
             OnOpenDetailView(
                 new OpenDetailViewEventArgs { ViewModelName = viewModelType.Name });
         }
-
-        public INavigationViewModel NavigationViewModel { get; }
 
         private async void OnOpenDetailView(OpenDetailViewEventArgs args)
         {
@@ -92,5 +83,27 @@ namespace FriendOrganizer.UI.ViewModel
 
             SelectedDetailViewModel = detailViewModel;
         }
+
+        private void AfterDetailDeleted(AfterDetailDeletedEventArgs args)
+        {
+            RemoveDetailViewModel(args.Id, args.ViewModelName);
+        }
+
+        private void AfterDetailClosed(AfterDetailClosedEventArgs args)
+        {
+            RemoveDetailViewModel(args.Id, args.ViewModelName);
+        }
+
+        private void RemoveDetailViewModel(int id, string viewModelName)
+        {
+            var detailViewModel = DetailViewModels
+                            .SingleOrDefault(vm => vm.Id == id
+                            && vm.GetType().Name == viewModelName);
+            if (detailViewModel != null)
+            {
+                DetailViewModels.Remove(detailViewModel);
+            }
+        }
+
     }
 }
