@@ -154,6 +154,7 @@
     <Compile Include="Wrapper\MeetingWrapper.cs" />
     <Compile Include="Wrapper\ModelWrapper.cs" />
     <Compile Include="Wrapper\NotifyErrorInfoBase.cs" />
+    <Compile Include="Wrapper\ProgrammingLanguageWrapper.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
