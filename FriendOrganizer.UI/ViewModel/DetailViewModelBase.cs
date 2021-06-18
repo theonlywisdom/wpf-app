@@ -15,6 +15,7 @@ namespace FriendOrganizer.UI.ViewModel
         private bool _hasChanges;
         protected readonly IEventAggregator EventAggregator;
         private int _id;
+        private string _title;
 
         public ICommand DeleteCommand { get; private set; }
 
@@ -31,6 +32,15 @@ namespace FriendOrganizer.UI.ViewModel
             DeleteCommand = new DelegateCommand(OnDeleteExecute);
         }
 
+        public string Title 
+        {
+            get { return _title; }
+            set
+            {
+                _title = value;
+                OnPropertyChanged();
+            }
+        }
 
         public bool HasChanges
         {
