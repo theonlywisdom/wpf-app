@@ -7,7 +7,7 @@ namespace FriendOrganizer.UI.Data.Repositories
         : GenericRepository<ProgrammingLanguage, FriendOrganizerDbContext>,
         IProgrammingLanguageRepository
     {
-        protected ProgrammingLanguageRepository(FriendOrganizerDbContext context) : base(context)
+        public ProgrammingLanguageRepository(FriendOrganizerDbContext context) : base(context)
         {
         }
     }
