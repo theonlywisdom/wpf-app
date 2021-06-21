@@ -52,8 +52,8 @@
                       SelectedItem="{Binding SelectedAddedFriend}"/>
 
             <StackPanel Grid.Row="1" Grid.Column="1">
-                <Button Content="&lt;&lt;" Margin="10" Command="{Binding AddFriendCommand}"/>
-                <Button Content="&gt;&gt;" Margin="10 0 10 10 " Command="{Binding RemoveFriendCommand}"/>
+                <Button Content="&lt;&lt;" Width="125" Margin="10 0 10 10" Command="{Binding AddFriendCommand}" FontSize="16"/>
+                <Button Content="&gt;&gt;" Width="125" Margin="10 0 10 10" Command="{Binding RemoveFriendCommand}" FontSize="16"/>
             </StackPanel>
 
             <Label Content="Available Friends" Grid.Column="2"/>
@@ -63,8 +63,8 @@
         </Grid>
         
         <StackPanel Grid.Row="7" Orientation="Horizontal">
-            <Button Content="Save" Width="75" Margin="10" Command="{Binding SaveCommand}"/>
-            <Button Content="Delete" Width="75" Margin="10" Command="{Binding DeleteCommand}"/>
+            <Button Content="Save" Width="75" Margin="10 0 10 10" Command="{Binding SaveCommand}" FontSize="16"/>
+            <Button Content="Delete" Width="75" Margin="10 0 10 10" Command="{Binding DeleteCommand}" FontSize="16"/>
         </StackPanel>
     </Grid>
 </UserControl>
