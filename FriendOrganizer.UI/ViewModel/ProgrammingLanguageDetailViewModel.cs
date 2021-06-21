@@ -119,8 +119,19 @@ namespace FriendOrganizer.UI.ViewModel
             wrapper.Name = "";
         }
 
-        private void OnRemoveExecute()
+        private async void OnRemoveExecute()
         {
+            var isReferenced =
+                await _programmingLanguageRepository.IsReferencedByFriendAsync(
+                    SelectedProgrammingLanguage.Id);
+            if (isReferenced)
+            {
+                MessageDialogService.ShowInfoDialog($"The Language" +
+                    $"{SelectedProgrammingLanguage.Name}" +
+                    $" can't be removed, as it is referenced by at least one friend");
+                return;
+            }
+
             SelectedProgrammingLanguage.PropertyChanged -= Wrapper_PropertyChanged;
             _programmingLanguageRepository.Remove(SelectedProgrammingLanguage.Model);
             ProgrammingLanguages.Remove(SelectedProgrammingLanguage);
@@ -128,8 +139,6 @@ namespace FriendOrganizer.UI.ViewModel
             HasChanges = _programmingLanguageRepository.HasChanges();
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
         }
-
-
 
         private bool OnRemoveCanExecute()
         {
