@@ -4,10 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:local="clr-namespace:FriendOrganizer.UI"
-        xmlns:view="clr-namespace:FriendOrganizer.UI.View"
-        xmlns:viewModel="clr-namespace:FriendOrganizer.UI.ViewModel"
-        mc:Ignorable="d"
+                 xmlns:view="clr-namespace:FriendOrganizer.UI.View"
+        xmlns:viewModel="clr-namespace:FriendOrganizer.UI.ViewModel" d:DataContext="{d:DesignInstance Type=viewModel:MainViewModel}"
+                 mc:Ignorable="d"
         Title="FriendOrganizer" Height="700" Width="1000" 
         WindowStartupLocation="CenterScreen"
         FontSize="20">
