@@ -7,12 +7,14 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace FriendOrganizer.UI.ViewModel
 {
     public class ProgrammingLanguageDetailViewModel : DetailViewModelBase
     {
         private IProgrammingLanguageRepository _programmingLanguageRepository;
+        private ProgrammingLanguageWrapper _selectedProgrammingLanguage;
 
         public ProgrammingLanguageDetailViewModel(IEventAggregator eventAggregator,
             IMessageDialogService messageDialogService,
@@ -22,6 +24,8 @@ namespace FriendOrganizer.UI.ViewModel
             _programmingLanguageRepository = programmingLanguageRepository;
             Title = "Programming Languages";
             ProgrammingLanguages = new ObservableCollection<ProgrammingLanguageWrapper>();
+            AddCommand = new DelegateCommand(OnAddExecute);
+            RemoveCommand = new DelegateCommand(OnRemoveExecute, OnRemoveCanExecute);
         }
 
 
@@ -61,6 +65,20 @@ namespace FriendOrganizer.UI.ViewModel
 
         public ObservableCollection<ProgrammingLanguageWrapper> ProgrammingLanguages { get; }
 
+        public ICommand RemoveCommand { get; }
+        public ICommand AddCommand { get; }
+
+        public ProgrammingLanguageWrapper SelectedProgrammingLanguage 
+        { 
+            get { return _selectedProgrammingLanguage; }
+            set
+            {
+                _selectedProgrammingLanguage = value;
+                OnPropertyChanged();
+                ((DelegateCommand)RemoveCommand).RaiseCanExecuteChanged();
+            } 
+        }
+
         protected override void OnDeleteExecute()
         {
             throw new NotImplementedException();
@@ -76,6 +94,34 @@ namespace FriendOrganizer.UI.ViewModel
             await _programmingLanguageRepository.SaveAsync();
             HasChanges = _programmingLanguageRepository.HasChanges();
             RaiseCollectionSavedEvent();
+        }
+
+        private void OnAddExecute()
+        {
+            var wrapper = new ProgrammingLanguageWrapper(new Model.ProgrammingLanguage());
+            wrapper.PropertyChanged += Wrapper_PropertyChanged;
+            _programmingLanguageRepository.Add(wrapper.Model);
+            ProgrammingLanguages.Add(wrapper);
+
+            // Trigger the validation
+            wrapper.Name = "";
+        }
+
+        private void OnRemoveExecute()
+        {
+            SelectedProgrammingLanguage.PropertyChanged -= Wrapper_PropertyChanged;
+            _programmingLanguageRepository.Remove(SelectedProgrammingLanguage.Model);
+            ProgrammingLanguages.Remove(SelectedProgrammingLanguage);
+            SelectedProgrammingLanguage = null;
+            HasChanges = _programmingLanguageRepository.HasChanges();
+            ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+        }
+
+
+
+        private bool OnRemoveCanExecute()
+        {
+            return SelectedProgrammingLanguage != null; 
         }
     }
 }
